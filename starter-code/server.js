@@ -6,17 +6,17 @@ const bodyParser = require('body-parser');
 const requestProxy = require('express-request-proxy');
 const app = express();
 const PORT = process.env.PORT || 3000;
-const conString = 'postgres://postgres:B86j07L13@localhost:5432/postgres'; // TODO: Don't forget to set your own conString
+const conString = 'postgres://localhost:5432'; // DONE: Don't forget to set your own conString
 const client = new pg.Client(conString);
-client.connect(console.error);
+client.connect();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('./public'));
 
 
-// TODO: Describe what our function for our middleware / proxy handling interacts with, both in what it does and where it is called
-// Put your response in this comment...
+// DONE: Describe what our function for our middleware / proxy handling interacts with, both in what it does and where it is called
+// Put your response in this comment... It handles Express requests and interacts with (in this case) the Github API and our code. More specifically, in this case, the proxy connects our protected github token with the API.
 function proxyGitHub(request, response) {
   console.log('Routing GitHub request for', request.params[0]);
   (requestProxy({
@@ -30,8 +30,8 @@ function proxyGitHub(request, response) {
 app.get('/', (request, response) => response.sendFile('index.html', {root: './public'}));
 app.get('/new', (request, response) => response.sendFile('new.html', {root: './public'}));
 app.get('/about', (request, response) => response.sendFile('index.html', {root: './public'}));
-// TODO: Where is this route called in the code? When invoked, what happens next?
-// Put your response in this comment...
+// DONE: Where is this route called in the code? When invoked, what happens next?
+// Put your response in this comment... This route is called by repos.requestRepos in repos.js. When invoked, it calls proxyGitHub as a callback.
 app.get('/github/*', proxyGitHub);
 
 
@@ -68,8 +68,8 @@ app.get('/articles', (request, response) => {
 });
 
 
-// TODO: This is a new route to find a specific instance of an article record from the DB. Where is it invoked? What does it do?
-// Put your response in this comment...
+// DONE: This is a new route to find a specific instance of an article record from the DB. Where is it invoked? What does it do?
+// Put your response in this comment... This is server-side method associated with the Article.findWhere method in articles.js. It retrieves information from PostGres based on user input.
 app.get('/articles/find', (request, response) => {
   let client = new pg.Client(conString);
   let sql = `SELECT * FROM articles
@@ -92,8 +92,8 @@ app.get('/articles/find', (request, response) => {
 })
 
 
-// TODO: Where is this route invoked? What does it do?
-// Put your response in this comment...
+// DONE: Where is this route invoked? What does it do?
+// Put your response in this comment... This is server-side method associated with the Article.allCategories method in articles.js. It retrieves all categories and returns it.
 app.get('/categories', (request, response) => {
   let client = new pg.Client(conString);
 
@@ -197,8 +197,8 @@ app.delete('/articles/:id', (request, response) => {
   response.send('Delete complete');
 });
 
-// TODO: Where is this invoked? What does it do?
-// Put your response in this comment...
+// DONE: Where is this invoked? What does it do?
+// Put your response in this comment...This is server-side method associated with the Article.truncateTable method in articles.js. It removes all records from the articles table in PostGres.
 app.delete('/articles', (request, response) => {
   client.query(
     'DELETE FROM articles;'

@@ -10,8 +10,8 @@
     $about.show().siblings().hide();
   };
 
-  // TODO: What is in 'render'? What values are passed in? Where does it interact elsewhere in the code?
-  // Put your response in this comment...
+  // DONE: What is in 'render'? What values are passed in? Where does it interact elsewhere in the code?
+  // Put your response in this comment... render is a reference to a handlebars template function. Handlebars.compile is a handlebars method that takes in a template from the HTML (in a script tag).
   const render = Handlebars.compile($('#repo-template').text());
 
   repoView.index = function() {

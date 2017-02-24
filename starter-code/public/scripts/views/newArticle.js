@@ -10,8 +10,8 @@
     $('#new-form').on('change', newArticle.create);
   };
 
-// TODO: Where is this invoked? What values are passed in? Where does it interact elsewhere in the code?
-// Put your response in this comment...
+// DONE: Where is this invoked? What values are passed in? Where does it interact elsewhere in the code?
+// Put your response in this comment...It's invoked as part of newArticle.initNewArticlePage (due to hoisting). No values are passed into the function, but it acquires values from form input values and makes a new object. Then the converts the object and displays it in the DOM.
   newArticle.create = function() {
     $('#articles').empty();
     let formArticle = new Article({
