@@ -1,6 +1,6 @@
 'use strict';
 
-(function(module) {
+(function (module) {
   const aboutController = {};
 
   aboutController.index = () => {
@@ -11,5 +11,5 @@
   // DONE: What value is in 'module'? What is the purpose of this line of code?
   // The Window object is held in module at this particular time.
   module.aboutController = aboutController;
-  
+
 })(window);

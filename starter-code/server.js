@@ -11,7 +11,7 @@ const client = new pg.Client(conString);
 client.connect();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('./public'));
 
 
@@ -21,15 +21,15 @@ function proxyGitHub(request, response) {
   console.log('Routing GitHub request for', request.params[0]);
   (requestProxy({
     url: `https://api.github.com/${request.params[0]}`,
-    headers: {Authorization: `token ${process.env.GITHUB_TOKEN}`}
+    headers: { Authorization: `token ${process.env.GITHUB_TOKEN}` }
   }))(request, response);
 }
 
 
 // NOTE: Routes for requesting HTML resources
-app.get('/', (request, response) => response.sendFile('index.html', {root: './public'}));
-app.get('/new', (request, response) => response.sendFile('new.html', {root: './public'}));
-app.get('/about', (request, response) => response.sendFile('index.html', {root: './public'}));
+app.get('/', (request, response) => response.sendFile('index.html', { root: './public' }));
+app.get('/new', (request, response) => response.sendFile('new.html', { root: './public' }));
+app.get('/about', (request, response) => response.sendFile('index.html', { root: './public' }));
 // DONE: Where is this route called in the code? When invoked, what happens next?
 // Put your response in this comment... This route is called by repos.requestRepos in repos.js. When invoked, it calls proxyGitHub as a callback.
 app.get('/github/*', proxyGitHub);
